@@ -3,13 +3,13 @@ class Gateway {
   constructor(){
     this.routes = [];
   }
-  get(uri, contentType, handler) {
+  get(uri, options, handler) {
     this.routes.push({
       uri: uri,
-      contentType: contentType,
+      contentType: options.contentType,
       handler: handler,
       method: 'GET'
-    })
+    });
   }
 }
 

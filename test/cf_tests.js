@@ -2,7 +2,7 @@
 const expect = require('chai').expect;
 const Driver = require('../lib/cf-driver');
 const json = require('../lib/content-types').json;
-const Gateway = require('../');
+const Gateway = require('../gateway');
 const noop = () => {};
 
 describe('cloudformation driver', function(){
@@ -17,7 +17,7 @@ describe('cloudformation driver', function(){
       bucketKey: 'cf-test-api-lambda',
       region: 'ap-southeast-2'
     });
-    app.get('/foobar', json, noop);
+    app.get('/foobar', {contentType: json}, noop);
 
     driver
       .generate(app)
