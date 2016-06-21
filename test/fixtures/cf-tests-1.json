@@ -1,0 +1,67 @@
+{
+  "Description": "cf-test-api stack",
+  "Parameters": {},
+  "Resources": {
+    "AppLambdaRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {}
+      }
+    },
+    "AppLambda": {
+      "Type" : "AWS::Lambda::Function",
+      "Properties" : {
+        "Code" : {
+          "S3Bucket" : "cf-test-api-bucket",
+          "S3Key" : "cf-test-api-lambda"
+        },
+        "Description" : "cf-test-api lambda app",
+        "Handler" : "index.handler",
+        "Role" : {"Ref": "AppLambdaRole"},
+        "Runtime" : "nodejs4.3",
+        "Timeout" : 30
+      }
+    },
+    "Server": {
+      "Type" : "AWS::ApiGateway::RestApi",
+      "Properties" : {
+        "Name" : "cf-test-api"
+      }
+    },
+    "foobar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "PathPart": "foobar",
+        "RestApiId": {"Ref": "Server"}
+      }
+    },
+    "foobar_get": {
+      "Type" : "AWS::ApiGateway::Method",
+      "Properties" : {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "IntegrationResponses": [],
+          "RequestParameters": {},
+          "RequestTemplates": {
+            "application/json": "{\"url\": \"/foobar\", \"body\": $input.body}"
+          },
+          "Type": "AWS",
+          "Uri": {"Fn::Join": ["", ["arn:aws:apigateway:region:lambda:path/2015-03-31/functions/", {"Fn:GetAtt": ["AppLambda", "ARN"]} ,"/invocations"]] }
+        },
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "Server",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "Server"
+        }
+      }
+    }
+  },
+  "Outputs": {
+  }
+}
