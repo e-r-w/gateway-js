@@ -48,7 +48,7 @@
             "application/json": "{\"url\": \"/foobar\", \"body\": $input.body}"
           },
           "Type": "AWS",
-          "Uri": {"Fn::Join": ["", ["arn:aws:apigateway:region:lambda:path/2015-03-31/functions/", {"Fn:GetAtt": ["AppLambda", "ARN"]} ,"/invocations"]] }
+          "Uri": {"Fn::Join": ["", ["arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/", {"Fn:GetAtt": ["AppLambda", "ARN"]} ,"/invocations"]] }
         },
         "ResourceId": {
           "Fn::GetAtt": [

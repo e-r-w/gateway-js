@@ -1,10 +1,7 @@
 
 class Gateway {
-  constructor(options){
+  constructor(){
     this.routes = [];
-    this.name = options.name;
-    this.bucket = options.bucket;
-    this.bucketKey = options.bucketKey;
   }
   get(uri, contentType, handler) {
     this.routes.push({
