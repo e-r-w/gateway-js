@@ -6,7 +6,7 @@ The intention of this project is to produce an express-like api that will allow 
 
 ## usage
 
-Define your routes using the gateway-js api: `app.[method](uri, contentType, handler)`
+Define your routes using the gateway-js api: `app.[method](uri, options, handler)`
 
 and export your `app` object so gateway-js can create routes in API Gateway:
 
@@ -15,11 +15,11 @@ const Gateway = require('gatewayjs');
 const app = new Gateway();
 const json = 'application/json';
 
-app.get('/hello/world', json, (req, res) => {
+app.get('/hello/world', {contentType: json}, (req, res) => {
   res.send({ hello: ', world!' });
 });
 
-app.get('/hello/foo', json, (req, res) => {
+app.get('/hello/foo', {contentType: json}, (req, res) => {
   res.send({ hello: ', foo!' });
 });
 
