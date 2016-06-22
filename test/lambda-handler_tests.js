@@ -1,6 +1,6 @@
 'use strict';
 const expect = require('chai').expect;
-const Gateway = require('../gateway');
+const Gateway = require('../').Gateway;
 
 describe('lambda handler', function(){
 
@@ -12,7 +12,7 @@ describe('lambda handler', function(){
       (req, res) => {
         res.send('foobar');
       });
-    require('../handlers/lambda').handler(app)({
+    require('../').lambdaHandler(app)({
       uri: '/foobar',
       method: 'GET',
       contentType: 'application/json'

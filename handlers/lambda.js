@@ -3,7 +3,7 @@
 const adapter = require('../adapters/api-gateway');
 const Response = require('../lib/response');
 
-exports.handler = function(app){
+module.exports = function(app){
   return (event, context, callback) => {
 
     const request = {

@@ -1,6 +1,6 @@
 'use strict';
 
-const Gateway = require('./gateway');
+const Gateway = require('../').Gateway;
 const app = new Gateway();
 
 app.get('/foobar',
@@ -17,4 +17,4 @@ app.get('/foo',
     res.send('foobar');
   });
 
-require('./handlers/http')(app).listen(8009);
+require('../').httpHandler(app).listen(8009);

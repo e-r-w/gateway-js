@@ -4,7 +4,7 @@ const adapter = require('../adapters/api-gateway');
 const Response = require('../lib/response');
 const http = require('http');
 
-exports.handler = function(app) {
+module.exports = function(app) {
   return http
     .createServer( (req, res) => {
 

@@ -2,7 +2,7 @@
 const expect = require('chai').expect;
 const Driver = require('../lib/cf-driver');
 const json = require('../lib/content-types').json;
-const Gateway = require('../gateway');
+const Gateway = require('../').Gateway;
 const noop = () => {};
 
 describe('cloudformation driver', function(){

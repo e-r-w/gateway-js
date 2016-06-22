@@ -55,7 +55,6 @@ const fs = require('fs');
 const CfDriver = require('gatewayjs').CfDriver;
 const myApp = require('./src/my-app').app;
 
-
 gulp.task('generate-cf-template', cb => {
   new CfDriver({
     name: 'my-api', // the name of your app
