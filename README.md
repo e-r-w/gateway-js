@@ -27,13 +27,15 @@ module.exports = app;
 ```
 
 ### integration with AWS lambda
-When creating a bundle to upload to s3 as your handler, you can use the pre-built lambda handler:
+When creating a bundle to upload to s3 as your lambda function, you can use the pre-built lambda handler:
 ```js
 // index.js
 const lambdaHandler = require('gatewayjs').lambdaHandler;
 const myApp = require('./my-app');
 exports.handler = lambdaHandler(myApp);
 ```
+
+This is the magic that allows you to define route handlers in an express/connect manner whilst still using lambda.
 
 ### integration with AWS API gateway
 You can also use gateway-js to create cloudformation templates for API gateway.
