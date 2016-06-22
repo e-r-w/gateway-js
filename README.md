@@ -8,7 +8,7 @@ The intention of this project is to produce an express-like api that will allow 
 
 Define your routes using the gateway-js api: `app.[method](uri, options, handler)`
 
-and export your `app` object so gateway-js can create routes in API Gateway:
+and export your `app` object so gateway-js can create routes in API Gateway and integrate with lambda:
 
 ```js
 const Gateway = require('gatewayjs').Gateway;
@@ -31,8 +31,16 @@ When creating a bundle to upload to s3 as your lambda function, you can use the 
 ```js
 // index.js
 const lambdaHandler = require('gatewayjs').lambdaHandler;
-const myApp = require('./my-app');
-exports.handler = lambdaHandler(myApp);
+const Gateway = require('gatewayjs').Gateway;
+const app = new Gateway();
+const json = 'application/json';
+
+app.get('/hello/world', {contentType: json}, (req, res) => {
+  res.send({ hello: ', world!' });
+});
+
+exports.app = app; // exposed for API gateway
+exports.handler = lambdaHandler(app); // exposed for lambda
 ```
 
 This is the magic that allows you to define route handlers in an express/connect manner whilst still using lambda.
@@ -40,12 +48,12 @@ This is the magic that allows you to define route handlers in an express/connect
 ### integration with AWS API gateway
 You can also use gateway-js to create cloudformation templates for API gateway.
 
-Using your build tool of choice, you can generate cloudformation templates given a complete app, e.g for gulp:
+Using your build tool of choice, you can generate cloudformation templates given a complete app, e.g for gulp, using the previous lambda handler:
 
 ```js
 const fs = require('fs');
 const CfDriver = require('gatewayjs').CfDriver;
-const myApp = require('./my-app');
+const myApp = require('./src/my-app').app;
 
 
 gulp.task('generate-cf-template', cb => {
