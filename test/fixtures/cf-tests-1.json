@@ -45,8 +45,8 @@
           "IntegrationResponses": [],
           "RequestParameters": {},
           "RequestTemplates": {
-            "application/json": "{\"url\": \"/foobar\", \"body\": $input.body}",
-            "text/html": "{\"url\": \"/foobar\", \"body\": $input.body}"
+            "application/json": "{\"url\": \"/foobar\", \"method\": \"GET\", \"body\": $input.body}",
+            "text/html": "{\"url\": \"/foobar\", \"method\": \"GET\", \"body\": $input.body}"
           },
           "Type": "AWS",
           "Uri": {"Fn::Join": ["", ["arn:aws:apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/", {"Fn:GetAtt": ["AppLambda", "ARN"]} ,"/invocations"]] }

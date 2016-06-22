@@ -10,6 +10,7 @@ class Gateway {
       handler: handler,
       method: 'GET'
     });
+    return this;
   }
 }
 

@@ -77,7 +77,7 @@ exports.handle = function(app, options){
         .map( key => {
           const type = contentTypes[key];
           const obj = {};
-          obj[type] = `{"url": "${route.uri}", "body": $input.body}`;
+          obj[type] = `{"url": "${route.uri}", "method": "${route.method}", "body": $input.body}`;
           return obj;
         })
         .reduce( (a, b) => Object.assign({}, a, b) );

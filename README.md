@@ -11,7 +11,7 @@ Define your routes using the gateway-js api: `app.[method](uri, contentType, han
 and export your `app` object so gateway-js can create routes in API Gateway:
 
 ```js
-const Gateway = require('gatewayjs');
+const Gateway = require('gatewayjs').Gateway;
 const app = new Gateway();
 const json = 'application/json';
 
@@ -24,4 +24,37 @@ app.get('/hello/foo', json, (req, res) => {
 });
 
 module.exports = app;
+```
+
+### integration with AWS lambda
+When creating a bundle to upload to s3 as your handler, you can use the pre-built lambda handler:
+```js
+// index.js
+const lambdaHandler = require('gatewayjs').lambdaHandler;
+const myApp = require('./my-app');
+exports.handler = lambdaHandler(myApp);
+```
+
+### integration with AWS API gateway
+You can also use gateway-js to create cloudformation templates for API gateway.
+
+Using your build tool of choice, you can generate cloudformation templates given a complete app, e.g for gulp:
+
+```js
+const fs = require('fs');
+const CfDriver = require('gatewayjs').CfDriver;
+const myApp = require('./my-app');
+
+
+gulp.task('generate-cf-template', cb => {
+  new CfDriver({
+    name: 'my-api', // the name of your app
+    bucket: 'my-api-bucket', // the name of the bucket your lambda is stored in
+    bucketKey: 'my-api-lambda', // the s3 bucket key where your lambda is stored
+    region: 'us-west-2' // the region your lambda will be deployed to
+  })
+    .generate(myApp)
+    .then( result => fs.writeFile('cf-tempalte.json', result, cb) )
+    .catch( err => cb(err) );
+});
 ```

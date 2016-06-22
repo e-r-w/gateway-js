@@ -1,5 +1,5 @@
+'use strict';
 
-const mock = require('mock-require');
 const Gateway = require('./gateway');
 const app = new Gateway();
 
@@ -17,7 +17,4 @@ app.get('/foo',
     res.send('foobar');
   });
 
-
-mock('./', app);
-
-require('./handlers/http');
+require('./handlers/http')(app).listen(8009);
